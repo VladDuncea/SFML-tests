@@ -88,17 +88,18 @@ int main()
 				isMovingShape = false;
 				isResizingShape = false;
 			}
-			if (event.type == sf::Event::MouseMoved||event.type == sf::Event::MouseButtonPressed)
+			if (event.type == sf::Event::MouseMoved)
 			{
 				//Get mouse pos
 				sf::Vector2f mousePos = (sf::Vector2f) sf::Mouse::getPosition(window);
+		
 
 				//Check if mouse needs to be changed
 				if (insideDragArea(mousePos, shape2))
 				{
 					window.setMouseCursor(cursorResize);
 				}
-				else if(!isResizingShape)
+				else if (!isResizingShape)
 				{
 					window.setMouseCursor(cursorDefault);
 				}
@@ -106,15 +107,17 @@ int main()
 				//Resize shape
 				if (isResizingShape)
 				{
-					sf::Vector2f newSize = shape2.getSize() + mousePos - offset;
-					if (newSize.x <= 0)
+					sf::Vector2f newSize = mousePos -shape2.getPosition();
+					if (newSize.x < 1)
 						newSize.x = 1;
-					if (newSize.y <= 0)
+					if (newSize.y < 1)
 						newSize.y = 1;
+					if (mousePos.x > WINDOW_WIDTH)
+						newSize.x = shape2.getSize().x;
+					if (mousePos.y > WINDOW_WIDTH)
+						newSize.y = shape2.getSize().y;
 					shape2.setSize(newSize);
-					offset = mousePos;
 				}
-
 				//Move shape if it is clicked
 				if (isMovingShape)
 				{
@@ -127,15 +130,13 @@ int main()
 						updatedPos.x = 0;
 					if (updatedPos.x + shape2.getSize().x > WINDOW_WIDTH)
 						updatedPos.x = WINDOW_WIDTH - shape2.getSize().x;
-						//Y bouding
+					//Y bouding
 					if (updatedPos.y < 0)
 						updatedPos.y = 0;
 					if (updatedPos.y + shape2.getSize().y > WINDOW_WIDTH)
 						updatedPos.y = WINDOW_WIDTH - shape2.getSize().y;
 					shape2.setPosition(updatedPos);
 				}
-				
-				
 			}
 		}
 
