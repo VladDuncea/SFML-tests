@@ -130,11 +130,11 @@ int main()
 						updatedPos.x = 0;
 					if (updatedPos.x + shape2.getSize().x > WINDOW_WIDTH)
 						updatedPos.x = WINDOW_WIDTH - shape2.getSize().x;
-					//Y bouding
+						//Y bouding
 					if (updatedPos.y < 0)
 						updatedPos.y = 0;
-					if (updatedPos.y + shape2.getSize().y > WINDOW_WIDTH)
-						updatedPos.y = WINDOW_WIDTH - shape2.getSize().y;
+					if (updatedPos.y + shape2.getSize().y > WINDOW_HEIGHT)
+						updatedPos.y = WINDOW_HEIGHT - shape2.getSize().y;
 					shape2.setPosition(updatedPos);
 				}
 			}
