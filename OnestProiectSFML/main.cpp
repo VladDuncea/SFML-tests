@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <iostream>
 
 //Window variables
 #define WINDOW_HEIGHT 600
@@ -55,6 +56,17 @@ int main()
 	sf::RectangleShape shape2({ 100,100 });
 	shape2.setFillColor(sf::Color::Red);
 
+	//Load texture
+	sf::Image img;
+	if (!img.loadFromFile("ico.png"))
+	{
+		std::cerr << "Eroare deschidere imagine" << std::endl;
+	}
+	sf::Texture texture;
+	texture.loadFromImage(img);
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+
 	//Local variables
 	bool isMovingShape = false;
 	bool isResizingShape = false;
@@ -71,7 +83,7 @@ int main()
 			if (event.type == sf::Event::Closed)
 			{
 				window.close();
-			}	
+			}
 			//Handle click
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
@@ -147,6 +159,7 @@ int main()
 
 		window.clear();
 		window.draw(shape2);
+		window.draw(sprite);
 		window.display();
 	}
 
