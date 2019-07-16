@@ -44,7 +44,7 @@ int main()
 {
 	//Create window
 	sf::RenderWindow window(sf::VideoMode( WINDOW_WIDTH, WINDOW_HEIGHT), "SFML Onest",sf::Style::Titlebar|sf::Style::Close);
-
+	window.setVerticalSyncEnabled(true);
 	//Create cursors
 	sf::Cursor cursorDefault;
 	sf::Cursor cursorResize;
@@ -99,7 +99,6 @@ int main()
 				//Get mouse pos
 				sf::Vector2f mousePos = (sf::Vector2f) sf::Mouse::getPosition(window);
 		
-
 				//Check if mouse needs to be changed
 				if (insideDragArea(mousePos, shape2))
 				{
