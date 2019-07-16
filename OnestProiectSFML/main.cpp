@@ -1,10 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+//Window variables
 #define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH  900
 
+//Shape parameters
 #define  DRAG_AREA 20
+#define MIN_HEIGHT 50
+#define MIN_WIDTH 50
 
 bool insideShape(sf::Vector2f mousePos, sf::RectangleShape shape)
 {
@@ -18,6 +22,7 @@ bool insideShape(sf::Vector2f mousePos, sf::RectangleShape shape)
 	if (mousePos.y<shapePos.y || mousePos.y >shapePos.y + shapeSize.y)
 		return false;
 
+	printf("Inside shape!");
 	return true;
 }
 
@@ -31,13 +36,14 @@ bool insideDragArea(sf::Vector2f mousePos, sf::RectangleShape shape)
 	if (mousePos.x < shapePos.x+shapeSize.x - DRAG_AREA || mousePos.y < shapePos.y + shapeSize.y - DRAG_AREA)
 		return false;
 
+	printf("Inside drag!");
 	return true;
 }
 
 int main()
 {
 	//Create window
-	sf::RenderWindow window(sf::VideoMode( WINDOW_WIDTH, WINDOW_HEIGHT), "SFML Onest");
+	sf::RenderWindow window(sf::VideoMode( WINDOW_WIDTH, WINDOW_HEIGHT), "SFML Onest",sf::Style::Titlebar|sf::Style::Close);
 
 	//Create cursors
 	sf::Cursor cursorDefault;
@@ -108,14 +114,14 @@ int main()
 				if (isResizingShape)
 				{
 					sf::Vector2f newSize = mousePos -shape2.getPosition();
-					if (newSize.x < 1)
-						newSize.x = 1;
-					if (newSize.y < 1)
-						newSize.y = 1;
+					if (newSize.x < MIN_WIDTH)
+						newSize.x = MIN_WIDTH;
+					if (newSize.y < MIN_HEIGHT)
+						newSize.y = MIN_HEIGHT;
 					if (mousePos.x > WINDOW_WIDTH)
-						newSize.x = shape2.getSize().x;
+						newSize.x = WINDOW_WIDTH - shape2.getPosition().x;
 					if (mousePos.y > WINDOW_WIDTH)
-						newSize.y = shape2.getSize().y;
+						newSize.y = WINDOW_HEIGHT - shape2.getPosition().y;
 					shape2.setSize(newSize);
 				}
 				//Move shape if it is clicked
